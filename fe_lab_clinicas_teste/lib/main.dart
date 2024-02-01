@@ -1,6 +1,8 @@
+import 'package:asyncstate/asyncstate.dart';
 import 'package:fe_lab_clinicas_core/fe_lab_clinicas_core.dart';
 import 'package:fe_lab_clinicas_teste/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_getit/flutter_getit.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +14,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const LabClinicasCoreConfig();
+    return LabClinicasCoreConfig(
+      title: 'Lab Clinicas Teste',
+      pagesBuilders: [
+        FlutterGetItPageBuilder(
+            page: (_) => const MyHomePage(title: 'Flutter GetIT'), path: '/'),
+      ],
+    );
   }
 }
 
@@ -45,7 +53,8 @@ class _MyHomePageState extends State<MyHomePage> with MessageViewMixin {
   }
 
   void _incrementCounter() {
-    controller.fazerAlgo();
+    // controller.fazerAlgo();
+    Future.delayed(const Duration(seconds: 3)).asyncLoader();
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
