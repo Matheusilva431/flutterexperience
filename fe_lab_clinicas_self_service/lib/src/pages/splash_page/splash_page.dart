@@ -8,6 +8,15 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) { 
+      Navigator.of(context).pushNamed('/auth/login');
+    });
+    super.initState();    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
