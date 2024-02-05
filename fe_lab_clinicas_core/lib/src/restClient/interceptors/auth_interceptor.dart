@@ -7,13 +7,14 @@ final class AuthInterceptor extends Interceptor {
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     final RequestOptions(:headers, :extra) = options;
-    const authHeadersKey = 'Authorization';
-    headers.remove(authHeadersKey);
+    const authHeaderKey = 'Authorization';
+    headers.remove(authHeaderKey);
 
     if (extra case {'DIO_AUTH_KEY': true}) {
       final sp = await SharedPreferences.getInstance();
       headers.addAll({
-        authHeadersKey: 'Bearer ${sp.getString(LocalStorageContants.accessToken)})',
+        authHeaderKey:
+            'Bearer ${sp.getString(LocalStorageContants.accessToken)}',
       });
     }
     handler.next(options);

@@ -1,4 +1,5 @@
 import 'package:fe_lab_clinicas_core/fe_lab_clinicas_core.dart';
+import 'package:fe_lab_clinicas_self_service/src/model/patient_model.dart';
 import 'package:fe_lab_clinicas_self_service/src/model/self_service_model.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 
@@ -16,6 +17,7 @@ class SelfServiceController with MessageStateMixin {
   final _step = ValueSignal(FormStep.none);
   var _model = const SelfServiceModel();
 
+  SelfServiceModel get model => _model;
   FormStep get step => _step();
 
   void startProcess() {
@@ -23,7 +25,7 @@ class SelfServiceController with MessageStateMixin {
   }
 
   void setWhoIAmDataSetAndNext(String name, String lastName) {
-    _model = _model.copyWith(name: () => name,lastName: () => lastName);
+    _model = _model.copyWith(name: () => name, lastName: () => lastName);
     _step.forceUpdate(FormStep.findPatient);
   }
 
@@ -31,4 +33,18 @@ class SelfServiceController with MessageStateMixin {
     _model = _model.clear();
   }
 
+  void goToFormPatient(PatientModel? patient) {
+    _model = _model.copyWith(patient: () => patient);
+    _step.forceUpdate(FormStep.patient);
+  }
+
+  void restartProcess() {
+    _step.forceUpdate(FormStep.restart);
+    clearForm();
+  }
+
+  void updatePatientAndGoDocument(PatientModel? patient) {
+    _model = _model.copyWith(patient: () => patient);
+    _step.forceUpdate(FormStep.documents);
+  }
 }
