@@ -1,6 +1,5 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:fe_lab_clinicas_core/fe_lab_clinicas_core.dart';
-import 'package:fe_lab_clinicas_self_service/src/model/patient_model.dart';
 import 'package:fe_lab_clinicas_self_service/src/model/self_service_model.dart';
 import 'package:fe_lab_clinicas_self_service/src/modules/self_service/patient/patient_controller.dart';
 import 'package:fe_lab_clinicas_self_service/src/modules/self_service/patient/patient_form_controller.dart';
@@ -274,8 +273,12 @@ class _PatientPageState extends State<PatientPage>
                               formKey.currentState?.validate() ?? false;
 
                           if (valid) {
+                            if(patientFound) {
                             controller.updateAndNext(updatePatient(
                                 selfServiceController.model.patient!));
+                            } else {
+                              controller.saveAndNext(createPatientRegister());
+                            }
                           }
                         },
                         child: Visibility(
